@@ -32,7 +32,9 @@ class ImageCreateForm(forms.ModelForm):
         extension = image_url.rsplit('.', 1)[1].lower()
         image_name = f"{name}.{extension}"  # имя изображения формируется названием изображения с расширением файла
         response = requests.get(image_url)  # Библиотека requests используется для скачивания изображения
+
         image.image.save(image_name, ContentFile(response.content), save=False)
+
         if commit:  # форма сохраняется в базе данных только в том случае, если параметр commit равен True
             image.save()
         return image
