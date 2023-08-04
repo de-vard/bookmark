@@ -18,12 +18,15 @@ class Contact(models.Model):
     user_form = models.ForeignKey(
         'auth.User',
         related_name='rel_from_set',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        verbose_name='пользователя, который подписывается на другого пользователя.'
     )
     user_to = models.ForeignKey(
         'auth.User',
         related_name='rel_to_set',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        verbose_name='пользователь, на которого подписываются'
+
     )
 
     created = models.DateTimeField('хранение времени взаимосвязи', auto_now_add=True)
@@ -43,7 +46,7 @@ user_model.add_to_class('following', models.ManyToManyField(
     'self',  # Указываем что взаимосвязь многие-ко-многим из модели User на саму себя
     through=Contact,  # указываем что нужно использовать конкретно-прикладную промежуточную модель
     related_name='followers',
-    symmetrical=False  # В данном же случае устанавливается параметр symmetrical=False, чтобы определить не336
+    symmetrical=False  # В данном же случае устанавливается параметр symmetrical=False, чтобы определить не
     # Отслеживание действий пользователя симметричную взаимосвязь (если я на вас подписываюсь, то это не означает,
     # что вы автоматически подписываетесь на меня)
 ))
